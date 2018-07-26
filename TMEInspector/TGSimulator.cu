@@ -30,8 +30,6 @@ TGSimulator::TGSimulator(unsigned int npart): m_numCells(npart) {
 TGSimulator::TGSimulator(char * fileName, bool scaleNumber){
  
 
-   bool debugAdCell = false;
-   bool checkBorder=false;
    bool checkGrid=false;
 
    //////////////

@@ -19,35 +19,42 @@
 #include <vector>
 #include "DataStructure.h"
 
-const unsigned int M = 10000;
+const uint M = 10000;
+
 
 
 class TGSimulator {
 
 protected:
 
-	unsigned int m_numCells;    //!< total number of cells in the set
+	uint m_numCells;    //!< total number of cells in the set
 
-        point4d* m_VCells;  //!< Unified memory vector storing position in the space and radius
-        int* m_VType;       //!< Unified memory vector storing cell phenotype
+	point4d* m_VCells;  //!< Unified memory vector storing position in the space and radius
+	int* m_VType;       //!< Unified memory vector storing cell phenotype
 
+	//Useful CellType parameter
+	float m_rmax;      //!< Maximum value of the cell's radius
 public:
 	TGSimulator();    //!< default constructor
-        TGSimulator(unsigned int npart);
-        
-        TGSimulator( char * fileName, bool scaleNumber); //!< vtk test constructor
+	TGSimulator(unsigned int npart);
 
-        //!< vbl constructor
-        TGSimulator(unsigned int npart, std::vector<double>& x, std::vector<double>& y ,std::vector<double>& z ,std::vector<double>& r ,std::vector<int>& t);
+	TGSimulator( char * fileName, bool scaleNumber); //!< vtk test constructor
+
+	//!< vbl constructor
+	TGSimulator(unsigned int npart, std::vector<double>& x, std::vector<double>& y ,std::vector<double>& z ,std::vector<double>& r ,std::vector<int>& t);
 
 	virtual ~TGSimulator();
 
 
-	unsigned int Get_numCells(){return m_numCells;}
-        point4d* Get_VCells(){ return m_VCells;};
-        
-        void PrintCellsPosition();
-       
+	//getter and setter
+	point4d* Get_VCells(){ return m_VCells;};
+	uint     Get_numCells(){return m_numCells;}
+	float    Get_rmax(){return m_rmax;}
+
+	void Set_rmax(float rmax) {m_rmax = rmax; return;}
+
+	void PrintCellsPosition();
+
 
 };
 

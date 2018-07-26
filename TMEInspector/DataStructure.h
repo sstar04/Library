@@ -16,28 +16,39 @@ const int NLABEL = 100;
 
 typedef unsigned int uint;
 
-// struct that will be stored in constant memory holding the simulation parameters
-struct SimParams
+// struct that stored parameter related to the space partition operations
+
+struct SubParams   //old name SimParameters
 {
-	unsigned int s;  //number of subdivision of the bounding box;
-	unsigned int NtotCell;
-	float bboxSide; //dimension in mm of the side of the bounding box
-	float cellSide;  //dimension in mm
+	unsigned int s;           //! number of subdivision of the cubic bounding box's side;
+	unsigned int NsmallBox;   //! total number of small cubic boxes dividing the cubic bounding box (!!vecchio nome della variabile NtotCell)
+	float bboxSide;           //! Length of cubic bounding box side
+	float sboxSide;           //! Length of small cubic boxes side   (!! vecchio nome della variabile sizeCell)
 	float3 originTranslation;
 
-	float ext_coeff; //cell elongation factor
 /*
 	//default constructor
-	SimParams(): s(0), NtotCell(0), bboxSide(0), cellSide(0), originTranslation(0), ext_coeff(0) {}
-	SimParams(uint a, uint b, float c, float d, float3 e, float f): s(a), NtotCell(b), bboxSide(c), cellSide(d), originTranslation(e), ext_coeff(f) {}
+	__host__ __device__
+	SimParams(): s(0), NsmallBox(0), bboxSide(0), smallBoxSide(0), originTranslation() {}
 
+	__host__ __device__
+	SimParams(uint a, uint b, float c, float d, float3 e): s(a), NsmallBox(b), bboxSide(c), smallBoxSide(d), originTranslation(e) {}
+
+	__host__ __device__
 	inline SimParams operator=(const SimParams& b)
-	   {
-
-	     return SimParams(b.s, b.NtotCell, b.bboxSide, b.cellSide, b.originTranslation, b.ext_coeff);
-	   }
-
+	{
+		return SimParams(b.s, b.NsmallBox, b.bboxSide, b.smallBoxSide, b.originTranslation);
+	}
 */
+	__host__ __device__
+	inline void PrintValues()
+	{
+		printf("s: %d, NsmallBox: %d, bboxSide: %f , cellSide: %f \n", s, NsmallBox, bboxSide, sboxSide);
+		printf("origin translation. x: %f, y: %f, z: %f \n", originTranslation.x, originTranslation.y, originTranslation.z);
+
+		return;
+	}
+
 };
 
 
@@ -116,6 +127,7 @@ __host__ __device__
 
    return c;
  }
+ */
 struct is_zero
   {
     __host__ __device__
@@ -125,29 +137,19 @@ struct is_zero
     }
   };
 
+
 //bounding box type
 typedef thrust::pair<point4d,point4d> bbox;
 
-
+/*
 SimParams globalParams;
 
 __constant__ SimParams params;
 
 __constant__ uint BorderLabel[NLABEL];
 
-//Round a / b to nearest higher integer value
-uint iDivUp(uint a, uint b)
-{
-	return (a % b != 0) ? (a / b + 1) : (a / b);
-}
 
-// compute grid and thread block size for a given number of elements
-void computeGridSize(uint n, uint blockSize, uint &numBlocks, uint &numThreads)
-{
-	//numThreads = min(blockSize, n);
-	numThreads = blockSize;
-	numBlocks = iDivUp(n, numThreads);
-}
+
 */
 
 /*  static __inline__ __host__ __device__ unsigned int min(unsigned int a, unsigned int b)

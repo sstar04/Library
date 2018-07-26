@@ -18,30 +18,37 @@
 
 #include <vector>
 #include "TGSimulator.h"
+#include "Filter.h"
 
+
+//__constant__ SimParams params;
 
 class TMEInspector {
 
 protected:
 
     TGSimulator m_tgSim; 
+    Filter m_filter;
     bool* m_border;     //vettore lista delle cellule di bordo
-	
- 
+
+
 public:
 	TMEInspector();
 	TMEInspector(TGSimulator& tgSim);
 	
-        //Costruttore che usa la Unified Memory   
-        TMEInspector(unsigned int npart);
+    //Costruttore che usa la Unified Memory
+    TMEInspector(unsigned int npart);
 
 	virtual ~TMEInspector();
 
 	//void Set_numCells(unsigned int);
        
-    bool* Get_BorderCells();
-    bool* Get_BorderCellsTh();
-    void Get_VecBorderCells(std::vector<bool>& IsonAS); //!< Copy in a std::vector the result of the STARAlgorithm: search of the cells at the border  
+    bool* Search_BorderCells();
+    bool* Search_BorderCellsTh();
+    void Search_VecBorderCells(std::vector<bool>& IsonAS); //!< Copy in a std::vector the result of the STARAlgorithm: search of the cells at the border
+
+    /*!< Exec the algorithm for detecting the cells at the border of the spheroid print the result, in terms of yes or no, in a std::vector<bool>*/
+    void STARAlgorithm(std::vector<bool>& IsonAS, float a);
 
 };
 

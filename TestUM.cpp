@@ -39,6 +39,7 @@ int main ()
 
     
     TGSimulator vbl(fileName, scaleNumber);
+    vbl.Set_rmax(8); //maximum vale of the cell's radius simulation parameter
     
     unsigned int NCELLS = vbl.Get_numCells(); 
     cout << "il numero di cellule e':" << NCELLS <<endl;
@@ -50,17 +51,27 @@ int main ()
      
 
      // get border cells     
-     bool* vbl_border = current_TMEInspector.Get_BorderCells();
+     bool* vbl_border = current_TMEInspector.Search_BorderCells();
     
      std::cout << std::endl << " Nuovo Border Cell list :" ;
      for(int i = 0; i < NCELLS; i++) {
         std::cout << vbl_border[i] << " ";     
         }
 
-    
+    /*
     //trasferico il contenuto nel std::vector IsonAS con il contenuto della Unified memory di TMEInspector 
     std::vector<bool> IsonAS(NCELLS);
-    current_TMEInspector.Get_VecBorderCells(IsonAS);
+    current_TMEInspector.Search_VecBorderCells(IsonAS);*/
+
+    std::vector<bool> IsonAS(NCELLS);
+
+    //Runtime parameter for STARAlgorithm
+    float a;                //default value 2;
+   // float r_max = 8;          //maximum value for the cell radius
+    std::cout << "Set the value for the space partitioning parameter a (a*r_max)(defult: 2)";
+    std::cin >> a;
+
+     current_TMEInspector.STARAlgorithm(IsonAS, a);
     
 
     std::cout << std::endl << " Print di IsonAS :" ;
