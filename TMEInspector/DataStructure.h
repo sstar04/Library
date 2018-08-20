@@ -104,7 +104,11 @@ struct point4d
 
 };
 
+//bounding box type
+typedef thrust::pair<point4d,point4d> bbox;
+
 /*
+
 __host__ __device__
  inline int3 operator+(const int3& a,const int3& b)
  {
@@ -125,8 +129,7 @@ struct is_zero
     }
   };
 
-//bounding box type
-typedef thrust::pair<point4d,point4d> bbox;
+
 
 
 SimParams globalParams;
@@ -134,6 +137,7 @@ SimParams globalParams;
 __constant__ SimParams params;
 
 __constant__ uint BorderLabel[NLABEL];
+
 
 //Round a / b to nearest higher integer value
 uint iDivUp(uint a, uint b)
@@ -148,11 +152,12 @@ void computeGridSize(uint n, uint blockSize, uint &numBlocks, uint &numThreads)
 	numThreads = blockSize;
 	numBlocks = iDivUp(n, numThreads);
 }
-*/
+
 
 /*  static __inline__ __host__ __device__ unsigned int min(unsigned int a, unsigned int b)
    {
      return umin(a, b);
    }*/
+
 
 #endif /* DATASTRUCTURE_H_ */

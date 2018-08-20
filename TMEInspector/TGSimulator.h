@@ -31,6 +31,9 @@ protected:
         point4d* m_VCells;  //!< Unified memory vector storing position in the space and radius
         int* m_VType;       //!< Unified memory vector storing cell phenotype
 
+	//Useful CellType parameter
+		float m_rmax;      //!< Maximum value of the cell's radius
+	
 public:
 	TGSimulator();    //!< default constructor
         TGSimulator(unsigned int npart);
@@ -45,6 +48,9 @@ public:
 
 	unsigned int Get_numCells(){return m_numCells;}
         point4d* Get_VCells(){ return m_VCells;};
+        float    Get_rmax(){return m_rmax;}
+
+	void Set_rmax(float rmax) {m_rmax = rmax; return;}
         
         void PrintCellsPosition();
        
